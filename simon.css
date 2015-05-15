@@ -1,0 +1,113 @@
+ /*MACRO ELEMENTS*/
+ body {
+ 	font-family: sans-serif;
+ 	color: black;
+ 	font-size: 20px;
+ }
+
+ header {
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
+ 	width: 100%;
+ 	height: 30px;
+ 	background-color: black;
+ 	margin: 0 0 10px 0;
+ }
+
+#container {
+	margin: 40px auto 40px auto;
+	width: 1000px;
+	height: 800px;
+	background-color: white;
+}
+
+#game {
+	float: left;
+	margin: 10px 0 10px 10px;
+	border: 10px solid black;
+	border-radius: 50%;
+	background-color: black;
+}
+
+aside {
+	margin: 10px auto 10px 10px;
+	float: left;
+	background-color: grey;
+	width: 200px;
+	height: 410px;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	margin: 10px 0 0 0;
+	background-color: black;
+}
+
+ /*SIMON BOARD*/
+.square {
+	width: 200px;
+	height: 200px;
+	float: left;
+	opacity: .25;
+}
+
+.row {
+	clear: both;
+	border-radius: 50%;
+}
+
+#green {
+	background-color: green;
+	margin: 0 5px 5px 0;
+	border-top-left-radius: 100%;
+}
+
+#red {
+	background-color: red;
+	margin: 0 0 5px 5px;
+	border-top-right-radius: 100%;
+}
+
+#yellow {
+	background-color: yellow;
+	margin: 5px 5px 0 0;
+	border-bottom-left-radius: 100%;
+}
+
+#blue {
+	background-color: blue;
+	margin: 5px 0 0 5px;
+	border-bottom-right-radius: 100%;
+}
+
+div .square.on {
+	width: 200px;
+	height: 200px;
+	float: left;
+	opacity: 1;
+}
+
+ /*HALL OF FAME*/
+ h3 {
+ 	margin: 0 10px 10px 10px;
+ }
+
+ .entry {
+ 	font-size: 12px;
+ }
+
+ .player {
+ 	text-align: left;
+ 	margin-left: 10px;
+
+ }
+
+ .score {
+ 	text-align: center;
+ }
+
