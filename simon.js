@@ -1,260 +1,203 @@
 ///////////////////////////////////////////////////////////
-// Necessaries
+//--------------Global Variables
 ///////////////////////////////////////////////////////////
 var green = $("#green");
 var red = $("#red");
 var yellow = $("#yellow");
 var blue = $("#blue");
-var cpuSeq = [];
-var userSeq = [];
-var numUserMove = 0;
-var numCPUMove = 0;
-var points = 0;
-var round = 2;
+var enabled = false;
+var activeGame = true;
+var hof = [];
 
-
-//////////
-//CPUmove Constructer
-//////////
-var CPUmove = function CPUmove() {
-	this.colors = [green, red, yellow, blue];
-}
-
-//////////
-//CPUmove Prototypes
-//////////
-//generate random number
-CPUmove.prototype.randNum = function() {
-	return Math.floor(Math.random()*this.colors.length);
-}
-
-//push a random color derived from calling randNum() into a sequence
-CPUmove.prototype.push = function() {
-	cpuSeq.push(this.colors[this.randNum()]);
-}
-
-//////////
-//Usermove Constructer
-//////////
-var Usermove = function Usermove() {
-	this.colors = [green, red, yellow, blue];
-}
-
-//////////
-//Usermove Prototype
-//////////
-//click listener 
-Usermove.prototype.select = function() {
-	green.on("click", function(event) {
-		green.toggleClass("on");
+///////////////////////////////////////////////////////////
+//--------------Event Listeners
+///////////////////////////////////////////////////////////
+green.on("click", function(event) {
+	if(enabled) {
+		currentgame.logic.currentmove.push("green");
+		green.addClass("on");
 		var timeoutID = setTimeout(function() {
-			green.toggleClass("on");
+			green.removeClass("on");
 		}, 1000);
-		return green;
-	})
+	}
+})
 
-	red.on("click", function(event) {
-		red.toggleClass("on");
+red.on("click", function(event) {
+	if(enabled) {
+		currentgame.logic.currentmove.push("red");
+		red.addClass("on");
 		var timeoutID = setTimeout(function() {
-			red.toggleClass("on");
+			red.removeClass("on");
 		}, 1000);
-		return red;
-	})
+	}
+})
 
-	yellow.on("click", function(e) {
-		yellow.toggleClass("on");
+yellow.on("click", function(e) {
+	if(enabled) {
+		currentgame.logic.currentmove.push("yellow");
+		yellow.addClass("on");
 		var timeoutID = setTimeout(function() {
-			yellow.toggleClass("on");
+			yellow.removeClass("on");
 		}, 1000);
-		return yellow;
-	})
+	}
+})
 
-	blue.on("click", function(e) {
-		blue.toggleClass("on");
+blue.on("click", function(e) {
+	if(enabled) {
+		currentgame.logic.currentmove.push("blue");
+		blue.addClass("on");
 		var timeoutID = setTimeout(function() {
-			blue.toggleClass("on");
+			blue.removeClass("on");
 		}, 1000);
-		return blue;
-	})
+	}
+})
+
+///////////////////////////////////////////////////////////
+//--------------Logic Object
+///////////////////////////////////////////////////////////
+//Logic Constructor
+var Logic = function Logic() {
+	this.colorsObj = [green, red, yellow, blue];
+	this.colorsStr = ["green", "red", "yellow", "blue"];
+	this.seqObj = [];
+	this.seqStr = [];
+	this.currentIndex = 0;
+	this.currentmove = [];
+}
+//randNum generator
+Logic.prototype.randNum = function() {
+	return Math.floor(Math.random()*this.colorsObj.length);
+}
+//push a random color into Logic seq
+Logic.prototype.newColor = function() {
+	var rand = this.randNum();
+	this.seqObj.push(this.colorsObj[rand])
+	this.seqStr.push(this.colorsStr[rand]);
+}
+//advances game to the next round
+Logic.prototype.nextRound = function() {
+	this.newColor();
+}
+//checking click event against match
+Logic.prototype.checkMatch = function() {
+	if (this.currentmove[this.currentIndex] == this.seqStr[this.currentIndex]) {
+		return true;
+	} else {
+		return false;
+	}
+}
+//resets the game in case of incorrect guess
+Logic.prototype.gameReset = function() {
+	this.currentIndex = 0;
+	this.seqObj = [];
+	this.seqStr = [];
 }
 
-//////////
-//Game Constructor
-//////////
-var Game = function Game() {
-	//new Usermove.select.call(this);//trying to apply 
-	this.seq = [green, red, yellow, green, green, yellow, red, red, yellow, blue, blue, blue];
+///////////////////////////////////////////////////////////
+//----------------Game Object
+///////////////////////////////////////////////////////////	
+//Game constructor
+var Game = function Game(name) {
+	this.name = name ? name : window.prompt("what's your name, player?");
+	this.logic = new Logic();;
+	this.currentmove = this.logic.currentmove;
+	this.currentIndex = this.logic.currentIndex;
 }
-
-//////////
-//Game Prototype
-//////////
-//trying to bring Usermove methods up to parent
-// Game.prototype = Object.create(Usermove.prototype);
-
-//iterates and renders the cpu move sequence
+//render engine iterating through Logic.seq
 Game.prototype.render = function () {
-	for (var i = 0; i < this.seq.length; i++) {
+	enabled = false;
+	for (var i = 0; i < this.logic.seqObj.length; i++) {
 		var hack = this;
     (function(n) {
       window.setTimeout(function() {
-        hack.seq[n].toggleClass("on");
+        hack.logic.seqObj[n].addClass("on");
         var timeoutID = setTimeout(function() {
-        	hack.seq[n].toggleClass("on");
+        	hack.logic.seqObj[n].removeClass("on");
+        	if (n = hack.logic.seqObj.length) {
+        		enabled = true;
+        	}
         }, 1000);
     	}, (n * 1500));
-  	})(i) 
+  	})(i); 
   }	
 }
-
-Game.prototype.usermove = function() {
-	green.on("click", function(event) {
-		green.toggleClass("on");
-		var timeoutID = setTimeout(function() {
-			green.toggleClass("on");
-		}, 1000);
-		return green;
-	})
-
-	red.on("click", function(event) {
-		red.toggleClass("on");
-		var timeoutID = setTimeout(function() {
-			red.toggleClass("on");
-		}, 1000);
-		return red;
-	})
-
-	yellow.on("click", function(e) {
-		yellow.toggleClass("on");
-		var timeoutID = setTimeout(function() {
-			yellow.toggleClass("on");
-		}, 1000);
-		return yellow;
-	})
-
-	blue.on("click", function(e) {
-		blue.toggleClass("on");
-		var timeoutID = setTimeout(function() {
-			blue.toggleClass("on");
-		}, 1000);
-		return blue;
-	})
+Game.prototype.win = function() {
+	this.logic.nextRound();
+	this.logic.currentIndex++;
+	this.render();
+}
+Game.prototype.lose = function() {
+	window.alert("You lose");
+	hof.push(this);
+	activeGame = false;
+	this.logic.gameReset();
 }
 
-//evaluate 
+
+///////////////////////////////////////////////////////////
+//-----------------Load Event
+///////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+	window.currentgame = new Game(name);
+	window.alert("Ready to play "+ name + "?")
+
+		enabled = false;
+		currentgame.logic.newColor();
+		currentgame.render();
+		enabled = true;
+		if(enabled) {
+			if(currentgame.currentmove[currentgame.currentIndex] == currentgame.logic.seqStr[currentgame.currentIndex]) {
+				currentgame.win();
+			} else {		
+				currentgame.lose();
+			}
+		}
+}
+
+	
+
+
+///////////////////////////////////////////////////////////
+//BULLSHIT
+///////////////////////////////////////////////////////////
+
+
+//evaluate for match based on new Usermove
 Game.prototype.round = function() {
 	for (var i = 0; i < this.seq.length; i++) {
+		var currentmove = new this.usermove();
 		(function(n) {
       window.setTimeout(function() {
-      	var currentmove = this.usermove();
       	if (currentmove != this.seq[n]) {
 					alert("Sorry, that was incorrect");
 					return false;
-				} else {
-    			alert("Got it! Ready for the next one?")
-    			return true
   			}
     	}, (n * 2000));
   	})(i)
+		alert("Got it! Ready for the next one?")
+		return true
   }
 }
 
 
 
 
-// 		if (this.usermove() != this.seq[i]) {
-// 			alert("Sorry, that was incorrect");
-// 			return false;
-// 		}
-// 	}
-// 	alert("Got it! Ready for the next one?")
-// 	return true;
-// }
-
-	
-
- // var numbers = [1, 2, 3, 4, 5];
-
- //    for (var i = 0; i < numbers.length; i++) {
- //        (function(n){ //anonymous function
- //            window.setTimeout(function(){
- //                console.log(numbers[n])
- //            }, (n * 1000))
- //        })(i) //immediately called passing in i as an argument
- //    }
-
-// // var displayCPUMoves = function() {
-// 	for (var i = 0; i < computerSeq.length; i++) {
-// 		computerSeq[i].toggleClass("on");
-
-// 		var timeoutID = setTimeout(function() {
-// 		colors[randNum].toggleClass("on");
-// 		}, 1000);
-// 		clearTimeout(timeoutID);
-// 	}
-// // }
-
-// The game should make the sequence longer each turn
-
-
- 
-// The game should play the sequence to completion before accepting the player's input.
-
-
-// The player must match the correct color sequence for the game to continue onto the next turn.
-
-
-
-
-// The game should alert the player whether or not they got the sequence correct, and if the game will continue or not.
-
-
+///////////////////////////////////////////////////////////
+// MVP
+///////////////////////////////////////////////////////////
+// The game should make the Logic longer each turn
+// The game should play the Logic to completion before accepting the player's input.
+// The player must match the correct color Logic for the game to continue onto the next turn.
+// The game should alert the player whether or not they got the Logic correct, and if the game will continue or not.
 // The game should be nicely styled.
-
-
-
-
-//generates a random color and fires it
-var randomColor = function() {
-	var colors = [green, red, yellow, blue];
-	var randNum = Math.floor(Math.random()*colors.length);
-
-	computerSeq.push(colors[randNum]);
-	colors[randNum].toggleClass("on");
-	var timeoutID = setTimeout(function() {
-		colors[randNum].toggleClass("on");
-	}, 1000);
-	computerMove++;
-}
-
-var matchChecker = function(userMove) {
-	var userMove = userMove
-	if (computerSeq[userMove] == userSeq[userMove]) {
-		points++;
-		return true;
-	} else {
-		return false;
-	}
-}
-
-var randomColor = function() {
-	var colors = [green, red, yellow, blue];
-	var randNum = Math.floor(Math.random()*colors.length);
-	computerSeq.push(colors[randNum]);
-	colors[randNum].toggleClass("on");
-	var timeoutID = setTimeout(function() {
-		colors[randNum].toggleClass("on");
-	}, 1000);
-	computerMove++;
-}
-
-$("box")
 
 ///////////////////////////////////////////////////////////
 // Reach goals
 ///////////////////////////////////////////////////////////
 // Add sound effects.
 // Add a high score board that people can add their names to.
-// Make the color sequence move faster and faster each round.
-// Add a timer that forces the player to match the sequence within the allotted time, or they lose.
+// Make the color Logic move faster and faster each round.
+// Add a timer that forces the player to match the Logic within the allotted time, or they lose.
 // Use Snap.svg to animate the board

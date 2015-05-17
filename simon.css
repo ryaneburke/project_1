@@ -85,10 +85,8 @@ footer {
 	border-bottom-right-radius: 100%;
 }
 
+/*SIMON GAME UI*/
 div .square.on {
-	width: 200px;
-	height: 200px;
-	float: left;
 	opacity: 1;
 }
 
