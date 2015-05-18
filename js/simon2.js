@@ -5,7 +5,7 @@ var green = $("#green");
 var red = $("#red");
 var yellow = $("#yellow");
 var blue = $("#blue");
-var enabled = false;
+var enabled = true;
 var hallOfFame = [];
 
 
@@ -68,7 +68,6 @@ var Game = function Game() {
 	this.seqStr = [];
 	this.turn = 0;
 	this.level = 1;
-	this.active = true;
 	this.currentmove = [];
 };
 
@@ -122,14 +121,14 @@ Game.prototype = {
 	//render engine iterating through this.seqObj
 	render: function () {
 		enabled = false;
-		for(var i = 0; i < this.seqObj.length; ++i) {
+		for(var i = 0; i < this.seqObj.length; i++) {
 			var that = this;
 	    (function(n) {
 	      window.setTimeout(function() {
 	        that.seqObj[n].addClass("on");
 	        var timeoutID = setTimeout(function() {
 	        	that.seqObj[n].removeClass("on");
-	        	if(n == that.seqObj.length) {
+	        	if(n+1 == that.seqObj.length) { //n will always be short of the length, so + 1 to length to fulfill conditional
 	        		enabled = true;
 	        	}
 	        }, 500);
@@ -141,7 +140,6 @@ Game.prototype = {
 		window.alert("ERRRRR! You lose.");
 		// this.name = window.prompt("You lost.\nBut not a bad effort.\nWhat's your name partner?");
 		// hallOfFame.push(this);
-		active = false;
 		this.gameReset();
 	},
 	init: function() {
