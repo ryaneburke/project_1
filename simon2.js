@@ -172,7 +172,6 @@ window.onload = function() {
 ///////////////////////////////////////////////////////////
 //WORK AREA
 ///////////////////////////////////////////////////////////
-
 //quickly cycle all the colors on load
 // startAnimation = function () {
 // 		enabled = false;
@@ -192,6 +191,17 @@ window.onload = function() {
 // 	  	})(i); 
 // 	  }	
 // 	},
+
+///////////////////////////////////////////////////////////
+//THINGS TO ADD
+///////////////////////////////////////////////////////////
+// refactor code
+// sounds
+// start-up animation
+// hall of fame array of objects
+// scroll hall of fame across footer
+// lose event - full-screen .5 opacity div that slides in with userinput for name
+// responsive design
 
 
 ///////////////////////////////////////////////////////////
