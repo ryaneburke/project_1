@@ -10,49 +10,70 @@
  	top: 0;
  	right: 0;
  	width: 100%;
- 	height: 30px;
+ 	height: 3.2em;
  	background-color: black;
  	margin: 0 0 10px 0;
- }
+}
 
-#container {
-	margin: 40px auto 40px auto;
-	width: 1000px;
-	height: 800px;
-	background-color: white;
+h1 {
+	color: white;
+ 	text-align: center;
+ 	font-size: 2em;
+}
+#wrapper {
+	position: relative;
+	background-color: grey;
+	width: 410px;
+	margin: 10% auto 10% auto;
 }
 
 #game {
-	float: left;
-	margin: 10px 0 10px 10px;
+	position: absolute;
+	top: 2em;
+	width: 410px;
+	z-index: 0;
 	border: 10px solid black;
 	border-radius: 50%;
 	background-color: black;
 }
 
-aside {
-	margin: 10px auto 10px 10px;
+#level {
+	position: absolute;
+	bottom: 4em;
+	width: 100%;
 	float: left;
-	background-color: grey;
-	width: 200px;
-	height: 410px;
+	background-color: white;
+	text-align: center;
 }
 
 footer {
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 30px;
+	height: 3.2em;
 	margin: 10px 0 0 0;
 	background-color: black;
 }
 
+#start {
+	font-size: 2em;
+	font-style: bold;
+	color: white;
+	text-align: center;
+	margin: -10px 0 0 0;
+}
+
+#start:hover {
+	font-style: italic;
+	cursor: pointer;
+}
+
  /*SIMON BOARD*/
 .square {
+	float: left;
 	width: 200px;
 	height: 200px;
-	float: left;
 	opacity: .25;
 }
 
@@ -90,22 +111,27 @@ div .square.on {
 	opacity: 1;
 }
 
- /*HALL OF FAME*/
- h3 {
- 	margin: 0 10px 10px 10px;
- }
+/*HALL OF FAME*/
+/*aside {
+	float: left;
+	margin: 10px auto 10px 10px;
+	background-color: black;
+	width: 100px;
+	height: 500px;
+	color: white;
+}
+h3 {
+	margin: 0 10px 10px 10px;
+}
+.entry {
+	font-size: 12px;
+}
+.player {
+	text-align: left;
+	margin-left: 10px;
 
- .entry {
- 	font-size: 12px;
- }
-
- .player {
- 	text-align: left;
- 	margin-left: 10px;
-
- }
-
- .score {
- 	text-align: center;
- }
+}
+.score {
+	text-align: center;
+}*/
 
