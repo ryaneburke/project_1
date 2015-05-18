@@ -21,7 +21,7 @@ green.on("click", function(event) {
 		}, 300);
 		currentgame.checkMatch();
 	}
-})
+});
 
 red.on("click", function(event) {
 	if(enabled) {
@@ -32,7 +32,7 @@ red.on("click", function(event) {
 		}, 300);
 		currentgame.checkMatch();
 	}
-})
+});
 
 yellow.on("click", function(e) {
 	if(enabled) {
@@ -43,7 +43,7 @@ yellow.on("click", function(e) {
 		}, 300);
 		currentgame.checkMatch();
 	}
-})
+});
 
 blue.on("click", function(e) {
 	if(enabled) {
@@ -54,14 +54,14 @@ blue.on("click", function(e) {
 		}, 300);
 		currentgame.checkMatch();
 	}
-})
+});
 
 ///////////////////////////////////////////////////////////
 //----------------Game Object
 ///////////////////////////////////////////////////////////	
 //Game constructor
 var Game = function Game() {
-	this.name;
+	this.name = undefined;
 	this.colorsObj = [green, red, blue, yellow];
 	this.colorsStr = ["green", "red", "blue", "yellow"];
 	this.seqObj = [];
@@ -70,7 +70,7 @@ var Game = function Game() {
 	this.level = 1;
 	this.active = true;
 	this.currentmove = [];
-}
+};
 
 Game.prototype = {
 	//randNum generator	
@@ -85,7 +85,7 @@ Game.prototype = {
 	},
 	//updating the level h2 with current level
 	renderLevel: function() {
-		$("#level").text("LEVEL: " + this.level)
+		$("#level").text("LEVEL: " + this.level);
 	},
 	//advances game to the next round
 	nextLevel: function() {
@@ -103,11 +103,11 @@ Game.prototype = {
 		} else {
 			this.turn++;
 		}
-		if (this.turn === this.seqStr.length) {
+		if(this.turn === this.seqStr.length) {
 			enabled = false;
 			var that = this;
       var timeoutID = setTimeout(function() {
-      	that.nextLevel()
+      	that.nextLevel();
       }, 1000);
 		}
 	},
@@ -122,14 +122,14 @@ Game.prototype = {
 	//render engine iterating through this.seqObj
 	render: function () {
 		enabled = false;
-		for (var i = 0; i < this.seqObj.length; ++i) {
+		for(var i = 0; i < this.seqObj.length; ++i) {
 			var that = this;
 	    (function(n) {
 	      window.setTimeout(function() {
 	        that.seqObj[n].addClass("on");
 	        var timeoutID = setTimeout(function() {
 	        	that.seqObj[n].removeClass("on");
-	        	if (n = that.seqObj.length) {
+	        	if(n == that.seqObj.length) {
 	        		enabled = true;
 	        	}
 	        }, 500);
@@ -150,9 +150,9 @@ Game.prototype = {
 			that.renderLevel();
 			that.newColor();
 			that.render();
-		})
+		});
 	}
-}
+};
 
 
 ///////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ window.onload = function() {
 
 	window.currentgame = new Game(name);
 	currentgame.init();
-}
+};
 
 
 
