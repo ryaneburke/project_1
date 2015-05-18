@@ -111,6 +111,16 @@ div .square.on {
 	opacity: 1;
 }
 
+/*LOSE EVENT*/
+.loser {
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	opacity: 50%;
+}
+
+
 /*HALL OF FAME*/
 /*aside {
 	float: left;

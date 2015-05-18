@@ -3,8 +3,8 @@
 ///////////////////////////////////////////////////////////
 var green = $("#green");
 var red = $("#red");
-var yellow = $("#yellow");
 var blue = $("#blue");
+var yellow = $("#yellow");
 var enabled = true;
 var hallOfFame = [];
 
@@ -12,49 +12,26 @@ var hallOfFame = [];
 ///////////////////////////////////////////////////////////
 //--------------Event Listeners
 ///////////////////////////////////////////////////////////
-green.on("click", function(event) {
-	if(enabled) {
-		currentgame.currentmove.push("green");
-		green.addClass("on");
-		var timeoutID = setTimeout(function() {
-			green.removeClass("on");
-		}, 300);
-		currentgame.checkMatch();
-	}
-});
+var elements = ["green", "red", "blue", "yellow"]
 
-red.on("click", function(event) {
-	if(enabled) {
-		currentgame.currentmove.push("red");
-		red.addClass("on");
-		var timeoutID = setTimeout(function() {
-			red.removeClass("on");
-		}, 300);
-		currentgame.checkMatch();
-	}
-});
+var addClick = function(colorStr) {
+	var colorObj = $("#" + colorStr);
+	colorObj.on("click", function(event) {
+		if(enabled) {
+			currentgame.currentmove.push(colorStr);
+			colorObj.addClass("on");
+			var timeoutID = setTimeout(function() {
+				colorObj.removeClass("on");
+			}, 300);
+			currentgame.checkMatch();
+		}
+	})
+}
 
-yellow.on("click", function(e) {
-	if(enabled) {
-		currentgame.currentmove.push("yellow");
-		yellow.addClass("on");
-		var timeoutID = setTimeout(function() {
-			yellow.removeClass("on");
-		}, 300);
-		currentgame.checkMatch();
-	}
-});
+for (var z = 0; z < elements.length; z++) {
+	addClick(elements[z]);
+}
 
-blue.on("click", function(e) {
-	if(enabled) {
-		currentgame.currentmove.push("blue");
-		blue.addClass("on");
-		var timeoutID = setTimeout(function() {
-			blue.removeClass("on");
-		}, 300);
-		currentgame.checkMatch();
-	}
-});
 
 ///////////////////////////////////////////////////////////
 //----------------Game Object
@@ -98,7 +75,9 @@ Game.prototype = {
 	//checking click event against match
 	checkMatch: function() {
 		if(this.currentmove[this.turn] != this.seqStr[this.turn]) {
+			hallOfFame.push(currentgame);
 			this.lose();
+			return false;
 		} else {
 			this.turn++;
 		}
@@ -137,9 +116,8 @@ Game.prototype = {
 	  }	
 	},
 	lose: function() {
-		window.alert("ERRRRR! You lose.");
+		$("#level").text("GAME OVER");
 		// this.name = window.prompt("You lost.\nBut not a bad effort.\nWhat's your name partner?");
-		// hallOfFame.push(this);
 		this.gameReset();
 	},
 	init: function() {
@@ -190,10 +168,16 @@ window.onload = function() {
 // 	  }	
 // 	},
 
+
+///////////////////////////////////////////////////////////
+//DONE AND DONE
+///////////////////////////////////////////////////////////
+// refactor code - event listeners, gameReset
+
 ///////////////////////////////////////////////////////////
 //THINGS TO ADD
 ///////////////////////////////////////////////////////////
-// refactor code
+// figure out how to push currentgame to hallOfFame before level is cleared back to 1 in gameReset
 // sounds
 // start-up animation
 // hall of fame array of objects
